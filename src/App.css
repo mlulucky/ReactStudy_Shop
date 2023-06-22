@@ -7,6 +7,65 @@
   pointer-events: none;
 }
 
+.logo {
+  font-size: 25px !important;
+}
+Nav {
+  font-weight: bold;
+}
+
+article {
+  /* border: 1px solid red; */
+  width: 880px;
+  margin: auto;
+}
+
+.mainImg {
+  width: 100%;
+}
+
+.bookImg {
+  flex: 1.5;
+  width: 100%;
+  object-fit: contain;
+  
+}
+
+.bookTitle {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 0;
+  flex: 1
+}
+.row {
+  text-align: left;
+}
+.col {
+  border: 1px solid red;
+  font-size: 0.9rem;
+
+}
+.book {
+  /* width: 80%; */
+  /* margin: auto; */
+  padding-left: 1rem;
+  text-align: left;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+}
+
+.book > div {
+  flex: 1.5;
+}
+
+
+img {
+  /* width: 70%; */
+  flex: 1;
+  object-fit: contain;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
