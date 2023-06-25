@@ -10,60 +10,58 @@
 .logo {
   font-size: 25px !important;
 }
+
 Nav {
   font-weight: bold;
 }
 
-article {
-  /* border: 1px solid red; */
+.cont {
   width: 880px;
   margin: auto;
+}
+
+ul {
+  list-style: none;
+}
+.row {
+  padding-left: 0;
 }
 
 .mainImg {
   width: 100%;
 }
 
-.bookImg {
-  flex: 1.5;
-  width: 100%;
-  object-fit: contain;
-  
-}
-
-.bookTitle {
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 0;
-  flex: 1
-}
-.row {
-  text-align: left;
-}
-.col {
-  border: 1px solid red;
-  font-size: 0.9rem;
-
-}
 .book {
-  /* width: 80%; */
-  /* margin: auto; */
-  padding-left: 1rem;
-  text-align: left;
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 2rem;
 }
 
-.book > div {
-  flex: 1.5;
+.bookImg {
+  width: 70%;
+  margin: auto;
 }
-
 
 img {
-  /* width: 70%; */
-  flex: 1;
+  max-width: 100%;
   object-fit: contain;
+}
+
+.bookInfo {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+h2, h4 {
+  text-align: center;
+}
+.bookTitle {
+  text-align: left;
+}
+
+
+@media (max-width: 768px){
+  .cont {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
