@@ -11,7 +11,7 @@ import {
   // createRoutes,
   createBrowserRouter,
   RouterProvider,
-  useNavigate 
+  useNavigate
    } from 'react-router-dom';
 
 import data from './data.js';
@@ -26,7 +26,7 @@ function Root(){
       element: <App />
     },
     {
-      path: "/detail",
+      path: "/detail/:id", // :id  URL파라미터 // /detail/아무거나
       element : <Detail book={book}/>,
       children : [ // nested router // /detail/member로 접속시 <Detail> & <div>react</div> 을 보여줌
         {

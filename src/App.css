@@ -15,6 +15,11 @@ Nav {
   font-weight: bold;
 }
 
+.aLink {
+  text-decoration: none;
+  color: #333;
+}
+
 .cont {
   width: 880px;
   margin: auto;
@@ -55,6 +60,11 @@ h2, h4 {
 }
 .bookTitle {
   text-align: left;
+}
+
+.title {
+  justify-content: space-between;
+  align-items: center;
 }
 
 
