@@ -51,6 +51,7 @@ export default function Detail(props) {
 			
 			
 			<div className="row mt-5">
+				
 				{
 					id === "0" || id === "1" || id === "2" || id === "3" ?
 						(
@@ -59,6 +60,19 @@ export default function Detail(props) {
 									<img src={`/img/book${Number(id)+1}.jpeg`} width="50%" />
 								</div>
 								<div className="col-md-6">
+									
+									<input onChange={(e)=>{ 
+											console.log(e.target.value)
+											if(isNaN(e.target.value)) {
+												alert("숫자가 아니다.")
+												console.log("숫자가 아니다")
+											} else {
+												console.log("숫자다");
+											}
+
+										}
+									} type="text" placeholder="숫자만 입력, 아니면 경고창 띄우기" />
+									
 									<div>
 										<h4 className="pt-5 bookTitle">{props.book[id].title}</h4>
 										<p>{props.book[id].content}</p>
