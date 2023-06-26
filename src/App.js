@@ -5,18 +5,16 @@ import data from './data.js';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function App() {
-  let [book, book변경] = useState(data);
+function App(props) {
   return (
     <div className="App">  
-      <Main book={book} book변경={book변경}/>
+      <Main ajax통신={props.ajax통신} book={props.book} book변경={props.book변경}/>
     </div>
   );
 }
 
 function Main(props){
   const [오름차순정렬, 정렬바꾸기] = useState(true); // 오름차순 정렬여부
-  
   const 정렬핸들러 = ()=>{
     let 정렬함수 = 오름차순정렬 ? (a, b) => a.title.localeCompare(b.title) : (a,b) => b.title.localeCompare(a.title)
     let newBook = [...props.book];
@@ -24,7 +22,7 @@ function Main(props){
     props.book변경(newBook);
     정렬바꾸기(!오름차순정렬);
   }
-  
+
   return (
     <div className="cont">
         <div>
@@ -40,12 +38,19 @@ function Main(props){
           <ul className="row">
             {
               props.book.map(function(a, i){
-                return (
-                  <Book key={props.book[i].id} 책데이터={props.book[i]} 인덱스={i}/>
+                return ( // a == book[i]
+                  <Book key={a.id} 책데이터={a} 인덱스={i}/>
                 )
               })
             }
           </ul>
+        </div>
+        <div>
+          {   
+            // 더보기 버튼 클릭하면 안보여주기
+            // 상태가 true 이면 보여주고, false 이면 감추기. (버튼을 클릭하면 false 로 바꾸기)
+          }
+          <button onClick={ props.ajax통신 } className="btn btn-outline-primary mb-5">더보기</button>
         </div>
       </div>
   )
@@ -54,7 +59,7 @@ function Main(props){
 // 컴포넌트
 function Book(props){
   return (
-    <li className="book col-md">
+    <li className="book col-md-3">
       <Link className="aLink" to={`/detail/${props.책데이터.id}`}>
         <div className="bookImg mb-1">
           <img src={`/img/book${props.책데이터.id + 1}.jpeg`} />
