@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function App(props) {
   return (
     <div className="App">  
-      <Main ajax통신={props.ajax통신} book={props.book} book변경={props.book변경}/>
+      <Main ajax통신={props.ajax통신} book={props.book} book변경={props.book변경} 버튼누른횟수={props.버튼누른횟수} 버튼누른횟수변경={props.버튼누른횟수변경}/>
     </div>
   );
 }
@@ -22,6 +22,8 @@ function Main(props){
     props.book변경(newBook);
     정렬바꾸기(!오름차순정렬);
   }
+  let [더보기버튼, 더보기버튼변경] = useState(true);
+
 
   return (
     <div className="cont">
@@ -46,11 +48,11 @@ function Main(props){
           </ul>
         </div>
         <div>
-          {   
-            // 더보기 버튼 클릭하면 안보여주기
-            // 상태가 true 이면 보여주고, false 이면 감추기. (버튼을 클릭하면 false 로 바꾸기)
-          }
-          <button onClick={ props.ajax통신 } className="btn btn-outline-primary mb-5">더보기</button>
+        <button
+          onClick={()=>{props.버튼누른횟수변경(props.버튼누른횟수 + 1); props.ajax통신();}}
+          className="btn btn-outline-primary mb-5">
+          더보기
+        </button>
         </div>
       </div>
   )

@@ -1,3 +1,4 @@
+
 import { Outlet, useParams } from "react-router-dom";
 // import styled from "styled-components"; // styled-component 컴포넌트를 만들 때 스타일을 미리 주입해서 만들 수 있다.
 import { useEffect, useState } from "react";
@@ -43,7 +44,38 @@ export default function Detail(props) {
 	// [ ] 빈 배열인 경우에는 업데이트될때, 실행안되고, 로드 될때만 실행
 	// => 컴포넌트 로드시 1회만 실행시키고 싶으로 때 !
 
+	const 상품디테일 = ()=>{
+		const 상품아이디동일 = props.book.find((a)=> a.id == id ); // 조건을 만족하는 요소를 반환
+		if(!상품아이디동일) {   // 일치하는 상품이 없을때  ) 
+			return  <h2>없는 페이지입니다.</h2> 
+		}  
+		return (
+			<>
+			
+			<div className="col-md-6" style={{ textAlign: 'center' }}>
+				<img src={`/img/book${Number(id)+1}.jpeg`} width="50%" />
+			</div>
+			<div className="col-md-6">
+				
+				<input onChange={(e)=>{ 
+						setNum(e.target.value);
+						if(isNaN(num)) {
+							e.target.value= "";
+						}
+					}
+				} type="text" placeholder="숫자만 입력, 아니면 경고창 띄우기" />
+				
+				<div>
+					<h4 className="pt-5 bookTitle">{props.book[id].title}</h4>
+					<p>{props.book[id].content}</p>
+					<p>{props.book[id].price}원</p>
+				</div>
+				<button className="btn btn-outline-danger">주문하기</button>
+			</div>
+			</>
 
+		)
+	}
 	
 
 	return (
@@ -58,90 +90,10 @@ export default function Detail(props) {
 				</div> : null
 			}
 			
-			
 			<div className="row mt-5">
 				{
-					props.book.map((a)=>{
-						if(a.id != id ) {
-							return (  <h2>없는 페이지입니다.</h2>    )
-						} 
-						return (
-							<>
-							
-							<div className="col-md-6" style={{ textAlign: 'center' }}>
-								<img src={`/img/book${Number(id)+1}.jpeg`} width="50%" />
-							</div>
-							<div className="col-md-6">
-								
-								<input onChange={(e)=>{ 
-										setNum(e.target.value);
-										if(isNaN(num)) {
-											e.target.value= "";
-										}
-										// if(isNaN(e.target.value)) {
-										// 	alert("숫자가 아니다.")
-										// 	console.log("숫자가 아니다")
-										// 	setNum(false);
-										// 	e.target.value="";
-										// } else {
-										// 	console.log("숫자다");
-										// }
-									}
-								} type="text" placeholder="숫자만 입력, 아니면 경고창 띄우기" />
-								
-								<div>
-									<h4 className="pt-5 bookTitle">{props.book[id].title}</h4>
-									<p>{props.book[id].content}</p>
-									<p>{props.book[id].price}원</p>
-								</div>
-								<button className="btn btn-outline-danger">주문하기</button>
-							</div>
-							</>
-
-						)
-						
-					})
+					상품디테일()
 				}
-				{/* {
-					
-
-					id === "0" || id === "1" || id === "2" || id === "3" ?
-						(
-							<>
-								<div className="col-md-6" style={{ textAlign: 'center' }}>
-									<img src={`/img/book${Number(id)+1}.jpeg`} width="50%" />
-								</div>
-								<div className="col-md-6">
-									
-									<input onChange={(e)=>{ 
-											setNum(e.target.value);
-											if(isNaN(num)) {
-												e.target.value= "";
-											}
-											// if(isNaN(e.target.value)) {
-											// 	alert("숫자가 아니다.")
-											// 	console.log("숫자가 아니다")
-											// 	setNum(false);
-											// 	e.target.value="";
-											// } else {
-											// 	console.log("숫자다");
-											// }
-										}
-									} type="text" placeholder="숫자만 입력, 아니면 경고창 띄우기" />
-									
-									<div>
-										<h4 className="pt-5 bookTitle">{props.book[id].title}</h4>
-										<p>{props.book[id].content}</p>
-										<p>{props.book[id].price}원</p>
-									</div>
-									<button className="btn btn-outline-danger">주문하기</button>
-								</div>
-							</>
-						) :
-						(
-							<h2>없는 페이지입니다.</h2>
-						)
-				} */}
 
 			</div>
 			<Outlet />
