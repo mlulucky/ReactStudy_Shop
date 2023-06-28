@@ -18,60 +18,58 @@ import data from './data.js';
 import {useState} from 'react';
 import axios from 'axios';
 
-function Root(){
-  let [book,book변경] = useState(data); 
-  let [버튼누른횟수,버튼누른횟수변경] = useState(0);
-  
-  const ajax통신 = () => {
-    
-    if(버튼누른횟수 == 0) {
-      axios.get(
-        'https://codingapple1.github.io/shop/data2.json'
-      )
-      .then((result) => { // result == 서버에서 받아온 데이터
-        const addBook = [...book];
-        result.data.map((a, i) => {
-          result.data[i].id++; // 통신하여 가져온 데이터의 id 값이 3,4,5 로 기존 id 값과 중복되서, 1씩 늘림
-        })
+let [book,book변경] = useState(data); 
+let [버튼누른횟수,버튼누른횟수변경] = useState(0);
+let [로딩중, 로딩중변경] = useState(true);
 
-        const moreArr = addBook.concat(result.data); // concat 배열을 합쳐서 새로운 배열을 반환
-        book변경(moreArr); // moreArr = [...book, ...result.data] // concat 과 동일한 효과(두 배열을 합친 새로운 배열) // [{},{},{},  {},{},{}] <- ... 문법은 배열의 대괄호를 벗겨준다.
-        console.log(moreArr);
-      }).catch(() => { console.log("통신오류") });
-    }
-    if(버튼누른횟수 == 1) {
-      axios.get('https://codingapple1.github.io/shop/data3.json')
-      .then((result) => { 
-        console.log(result);
-        const addBook = [...book];
-        result.data.map((a, i) => {
-          result.data[i].id++; // 통신하여 가져온 데이터의 id 값이 3,4,5 로 기존 id 값과 중복되서, 1씩 늘림
-        })
-
-        const moreArr = addBook.concat(result.data); // concat 배열을 합쳐서 새로운 배열을 반환
-        book변경(moreArr); // moreArr = [...book, ...result.data] // concat 과 동일한 효과(두 배열을 합친 새로운 배열) // [{},{},{},  {},{},{}] <- ... 문법은 배열의 대괄호를 벗겨준다.
-        console.log(moreArr);
-      }).catch(() => { console.log("통신오류") });
-    }
-      
+let url = "";
+switch(버튼누른횟수) {
+  case 0:
+    url = "https://codingapple1.github.io/shop/data2.json";
+    break;
+  case 1:
+    url = "https://codingapple1.github.io/shop/data3.json"; 
+    break;
+  default:
+    alert("조회되는 상품이 없습니다.");
+    break;
+}
+const ajax통신 = () => {  
+ let 로딩중UI = ()=>{
+    return <div>로딩중입니다.</div>
   }
 
-  // const ajax통신 = () => {
-  //   axios.get('https://codingapple1.github.io/shop/data2.json')
-  //     .then((result) => { // result == 서버에서 받아온 데이터
-  //       const addBook = [...book];
-  //       result.data.map((a, i) => {
-  //         result.data[i].id++; // 통신하여 가져온 데이터의 id 값이 3,4,5 로 기존 id 값과 중복되서, 1씩 늘림
-  //       })
+  if(url) {
+    // alert("로딩중입니다.")
+    axios.get(url)
+    .then((result) => { // result == 서버에서 받아온 데이터
+      로딩중변경(false)
+      // alert("로딩숨기기");
+      const addBook = [...book];
+      result.data.map((a, i) => {
+        result.data[i].id++; // 통신하여 가져온 데이터의 id 값이 3,4,5 로 기존 id 값과 중복되서, 1씩 늘림
+      })
 
-  //       const moreArr = addBook.concat(result.data); // concat 배열을 합쳐서 새로운 배열을 반환
-  //       book변경(moreArr); // moreArr = [...book, ...result.data] // concat 과 동일한 효과(두 배열을 합친 새로운 배열) // [{},{},{},  {},{},{}] <- ... 문법은 배열의 대괄호를 벗겨준다.
-  //       console.log(moreArr);
-  //     })
-  //     .catch(() => { console.log("통신오류") });
-  // }
+      const moreArr = addBook.concat(result.data); // concat 배열을 합쳐서 새로운 배열을 반환
+      book변경(moreArr); // moreArr = [...book, ...result.data] // concat 과 동일한 효과(두 배열을 합친 새로운 배열) // [{},{},{},  {},{},{}] <- ... 문법은 배열의 대괄호를 벗겨준다.
+      console.log(moreArr);
+    })
+    .catch(() => { // ajax 통신 에러일 때
+      console.log("통신오류") 
+    });
 
-  const router = createBrowserRouter([
+  }
+
+  return (
+    <div>
+      { 로딩중 && <로딩중UI/> }
+    </div>
+  );
+
+}
+
+function Root(){
+   const router = createBrowserRouter([
   
     {
       path: "/",

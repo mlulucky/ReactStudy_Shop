@@ -35,6 +35,7 @@ ul {
 
 .mainImg {
   width: 100%;
+  height: auto;
 }
 
 .book {
@@ -48,6 +49,7 @@ ul {
 
 img {
   max-width: 100%;
+  /* height: 180px; */
   object-fit: contain;
 }
 
