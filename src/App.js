@@ -15,6 +15,9 @@ function App(props) {
 
 function Main(props){
   const [오름차순정렬, 정렬바꾸기] = useState(true); // 오름차순 정렬여부
+  const [현재상품인덱스, 현재상품인덱스변경] = useState(4);
+
+
   const 정렬핸들러 = ()=>{
     let 정렬함수 = 오름차순정렬 ? (a, b) => a.title.localeCompare(b.title) : (a,b) => b.title.localeCompare(a.title)
     let newBook = [...props.book];
@@ -22,8 +25,14 @@ function Main(props){
     props.book변경(newBook);
     정렬바꾸기(!오름차순정렬);
   }
-  let [더보기버튼, 더보기버튼변경] = useState(true);
 
+  const 더보기핸들러 = () => {
+    props.버튼누른횟수변경(props.버튼누른횟수 + 1); 
+    props.ajax통신();
+    현재상품인덱스변경(현재상품인덱스 + 4);
+  }
+
+  const 보여줄상품 = props.book.slice(0, 현재상품인덱스);
 
   return (
     <div className="cont">
@@ -39,17 +48,25 @@ function Main(props){
           </div>
           <ul className="row">
             {
-              props.book.map(function(a, i){
+              보여줄상품.map(function(a, i){
                 return ( // a == book[i]
                   <Book key={a.id} 책데이터={a} 인덱스={i}/>
                 )
               })
+
+              // props.book.map(function(a, i){
+              //   return ( // a == book[i]
+              //     <Book key={a.id} 책데이터={a} 인덱스={i}/>
+              //   )
+              // })
+
+
             }
           </ul>
         </div>
         <div>
         <button
-          onClick={()=>{props.버튼누른횟수변경(props.버튼누른횟수 + 1); props.ajax통신();}}
+          onClick={ 더보기핸들러 }
           className="btn btn-outline-primary mb-5">
           더보기
         </button>
@@ -72,7 +89,6 @@ function Book(props){
         </div>
       </Link>
     </li>
-
   )
 }
 
