@@ -30,11 +30,9 @@ function Root() {
     let url1 = "https://codingapple1.github.io/shop/data2.json";
     let url2 = "https://codingapple1.github.io/shop/data3.json";
 
-    let 로딩중UI = () => {
-      return <div>로딩중입니다.</div>
-    }
-
     try {
+      로딩중변경(true);
+      console.log("로딩중 ui 보이기");
       const res1 = await axios.get(url1); // 서버에서 받아온 데이터
       const res2 = await axios.get(url2);
 
@@ -44,15 +42,17 @@ function Root() {
         newData[i].id++; // 통신하여 가져온 데이터의 id 값이 3,4,5 로 기존 id 값과 중복되서, 1씩 늘림
       })
       console.log("ajax 통신 newData", newData);
-
+      로딩중변경(false);
+      console.log("로딩중 ui 숨기기");
     } catch (e) { // ajax 통신 에러일 때
+      로딩중변경(false);
+      console.log("로딩중 ui 숨기기");
       console.log("통신오류", e);
     }
+
   }
 
-
   const router = createBrowserRouter([
-
     {
       path: "/",
       element: <App ajax통신={ajax통신} newData={newData} book={book} book변경={book변경} 버튼누른횟수={버튼누른횟수} 버튼누른횟수변경={버튼누른횟수변경} />
@@ -94,6 +94,7 @@ function Root() {
     <React.StrictMode>
       <BrowserRouter> {/* Router 컴포넌트로 감싸주기 */}
         <Header />
+      { 로딩중 && <div>로딩중입니다.</div>}
       </BrowserRouter>
       <RouterProvider router={router} />
     </React.StrictMode>

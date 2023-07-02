@@ -15,6 +15,10 @@ Nav {
   font-weight: bold;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link  {
+  color : #fff !important;
+  background-color: #324767 !important;
+}
 
 .aLink {
   text-decoration: none;
@@ -69,6 +73,8 @@ h2, h4 {
   justify-content: space-between;
   align-items: center;
 }
+
+
 
 
 @media (max-width: 768px){
