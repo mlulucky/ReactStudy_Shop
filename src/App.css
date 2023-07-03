@@ -79,7 +79,20 @@ h2, h4 {
   align-items: center;
 }
 
+/* 애니메이션 효과 */
+/* 1. 애니메이션 동작 전 className 만들기
+2. 애니메이션 동작 후 className 만들기
+3. 2번 className 에 transition 속성 추가
+4. 원할때 2번 className 부착 */
 
+.aniStart {
+  opacity: 0;
+}
+
+.aniEnd {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
 
 
 @media (max-width: 768px){

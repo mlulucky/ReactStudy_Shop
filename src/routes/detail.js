@@ -22,6 +22,11 @@ export default function Detail(props) {
 	let [num, setNum] = useState('');
 
 	let [탭번호, 탭번호변경] = useState(0);
+	let [애니메이션, 애니메이션변경] = useState('');
+
+	useEffect(()=>{
+		
+	},[애니메이션변경]);
 
 
 	useEffect(() => {
@@ -90,13 +95,20 @@ export default function Detail(props) {
 				<div className="mb-5">
 					<Nav className="mt-5 mb-3 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
 						<Nav.Item>
-							<Nav.Link eventKey="link-0" onClick={() => { 탭번호변경(0) }}>도서정보</Nav.Link>
+							<Nav.Link 
+								eventKey="link-0"
+								onClick={() => { 
+									탭번호변경(0)
+
+								}}>
+								도서정보
+							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
 							<Nav.Link eventKey="link-1" onClick={() => { 탭번호변경(1) }}>리뷰/한줄평</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link eventKey="disabled" onClick={() => { 탭번호변경(2) }}>
+							<Nav.Link eventKey="link-2" onClick={() => { 탭번호변경(2) }}>
 								배송/반품/교환
 							</Nav.Link>
 						</Nav.Item>
@@ -112,7 +124,7 @@ export default function Detail(props) {
 					{
 
 						탭번호 == 0 ?
-							<div >
+							<div className="aniStart">
 								<h5>책소개</h5>
 								<p>{props.book[id].info}</p>
 							</div>
@@ -120,15 +132,15 @@ export default function Detail(props) {
 					}
 					{
 						탭번호 == 1 ? (
-							<div>
+							<div className="aniStart">
 								{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
-									numId>=0 && numId<=3 ?
-									(
-										props.book[numId].review.map((a, i) => {
-											return <p>{a}</p>
-										})
-									)
-									: <div>리뷰1</div>
+									numId >= 0 && numId <= 3 ?
+										(
+											props.book[numId].review.map((a, i) => {
+												return <p>{a}</p>
+											})
+										)
+										: <div>리뷰1</div>
 								}
 							</div>
 						)
@@ -136,7 +148,7 @@ export default function Detail(props) {
 					}
 					{
 						탭번호 == 2 ?
-							<div>
+							<div className="aniStart">
 								<h5>배송/반품/교환 안내</h5>
 								<table className="table table-bordered">
 									<tbody>
