@@ -20,6 +20,9 @@ export default function Detail(props) {
 	let [count, setCount] = useState(0);
 	let [num, setNum] = useState('');
 
+	let [탭번호, 탭번호변경] = useState(0);
+
+
 	useEffect(() => {
 		// 🍒html 이 모두 렌더링 된 이후에 실행
 		// 🍒detail 컴포넌트가 로드될때, 업데이트될때 실행
@@ -84,40 +87,54 @@ export default function Detail(props) {
 					<button className="btn btn-outline-danger">주문하기</button>
 				</div>
 				<div className="mb-5">
-					<Nav  className="mt-5 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
+					<Nav className="mt-5 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
 						<Nav.Item>
-							<Nav.Link eventKey="link-0">도서정보</Nav.Link>
+							<Nav.Link eventKey="link-0" onClick={() => { 탭번호변경(0) }}>도서정보</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link eventKey="link-1">리뷰/한줄평</Nav.Link>
+							<Nav.Link eventKey="link-1" onClick={() => { 탭번호변경(1) }}>리뷰/한줄평</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link eventKey="disabled">
+							<Nav.Link eventKey="disabled" onClick={() => { 탭번호변경(2) }}>
 								배송/반품/교환
 							</Nav.Link>
 						</Nav.Item>
 					</Nav>
+					{/* {
 
-					<div>내용0</div>
-					<div>내용1</div>
-					<div>내용2</div>
+						function 탭내용({탭번호}){
+							return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭번호]
+						}
 
-{/* 					
-					<Tabs
-						defaultActiveKey="home"
-						className="mt-5 mb-3 nav-pills nav-justified"
-					>
-						<Tab eventKey="home" title="도서정보">
-							Tab content for Home
-						</Tab>
-						<Tab eventKey="profile" title="리뷰/한줄평">
-							Tab content for Profile
-						</Tab>
-						<Tab eventKey="contact" title="배송/반품/교환">
-							Tab content for Contact
-						</Tab>
-					</Tabs> */}
+					} */}
 
+					{
+
+						탭번호 == 0 ?
+							<div>
+								<h4>책소개</h4>
+								<p>
+									<b>
+										★★ 문해력 전문가 ‘콩나물쌤’의 신작 ★★
+										세상의 지식을 씹어먹을 무기, 지식책 문해력
+										‘어휘 + 배경지식’ 다지기 위해
+										반드시 초4 전에 지식책 읽기 시작하라!
+									</b>
+
+
+									어휘와 배경지식이 풍부해 어떤 과목, 어떤 문제를 만나도 쉽게 이해하고 자신감 있게 해결하는 아이 vs 어휘와 배경지식이 빈약해 학년이 오르고 교과 난이도가 어려워질수록 문제에 접근조차 하지 못하고 겉도는 아이. 이 차이는 어디에서 오는 걸까?
+
+									초등 교육 전문가이자 문해력 전문가인 ‘콩나물쌤’ 전병규 저자는 이 차이가 단연 ‘지식책 문해력’의 차이라고 말한다. 저자는 이제 제법 많은 부모들이 문해력의 중요성에 대해 인식하고 있지만, 정작 성적과 직접적으로 연결되는 것은 ‘지식책 문해력’이라고 강조한다. 지식을 담은 모든 글을 통칭하는 ‘지식책’ 읽기를 통해 ‘이야기책’에서는 절대 얻을 수 없는 학문 어휘를 늘리고, 해당 분야의 배경지식을 쌓아가며 문해력을 높이면, 교과 공부는 저절로 재밌고 쉬운 것이 된다. 공부를 잘한다는 것은 다름 아닌 학문 어휘를 많이 안다는 것이며, 탄탄한 배경지식은 새로운 지식을 이해하고 흡수할 수 있는 양을 확보해 준다.
+								</p>
+							</div>
+							: null
+					}
+					{
+						탭번호 == 1 ? <div>내용1</div> : null
+					}
+					{
+						탭번호 == 2 ? <div>내용2</div> : null
+					}
 
 				</div>
 			</>
