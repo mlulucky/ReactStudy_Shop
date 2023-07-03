@@ -40,7 +40,7 @@ function Main(props) {
     // 더보기 버튼을 누를때 추가로보여줄 상품을 book 리스트에 추가하여, <Book key={a.id} 책데이터={a} 인덱스={i}/> 가 추가되는 것!
 
   }
-
+  
   return (
     <div className="cont">
       <div>

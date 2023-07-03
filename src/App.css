@@ -37,6 +37,11 @@ ul {
   padding-left: 0;
 }
 
+.division {
+  vertical-align: middle;
+  text-align: center;
+  background-color: #f5f5f5 !important;
+}
 .mainImg {
   width: 100%;
   height: auto;
