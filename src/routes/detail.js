@@ -2,8 +2,6 @@
 import { Outlet, useParams } from "react-router-dom";
 // import styled from "styled-components"; // styled-component 컴포넌트를 만들 때 스타일을 미리 주입해서 만들 수 있다.
 import { useEffect, useState } from "react";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Nav from 'react-bootstrap/Nav';
 
 
@@ -14,7 +12,7 @@ export default function Detail(props) {
 	// id 는 0,1,2,3 인 경우에만 아닌 경우는 없는 ui 보여주기
 
 	let 찾은상품 = props.book.find(function (x) {
-		return x.id == id
+		return x.id === id
 	})
 
 	let [alertEvent, setAlertEvent] = useState(true);
@@ -25,8 +23,13 @@ export default function Detail(props) {
 	let [애니메이션, 애니메이션변경] = useState('');
 
 	useEffect(()=>{
-		
-	},[애니메이션변경]);
+		setTimeout(()=>{
+			애니메이션변경('aniEnd');
+		},100);
+		return ()=>{
+			애니메이션변경('');
+		}
+	},[탭번호]);
 
 
 	useEffect(() => {
@@ -95,13 +98,8 @@ export default function Detail(props) {
 				<div className="mb-5">
 					<Nav className="mt-5 mb-3 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
 						<Nav.Item>
-							<Nav.Link 
-								eventKey="link-0"
-								onClick={() => { 
-									탭번호변경(0)
-
-								}}>
-								도서정보
+							<Nav.Link eventKey="link-0"
+								onClick={() => { 탭번호변경(0) }}> 도서정보
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
@@ -122,54 +120,61 @@ export default function Detail(props) {
 					} */}
 
 					{
-
-						탭번호 == 0 ?
-							<div className="aniStart">
-								<h5>책소개</h5>
-								<p>{props.book[id].info}</p>
-							</div>
-							: null
-					}
-					{
-						탭번호 == 1 ? (
-							<div className="aniStart">
-								{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
-									numId >= 0 && numId <= 3 ?
-										(
-											props.book[numId].review.map((a, i) => {
-												return <p>{a}</p>
-											})
-										)
-										: <div>리뷰1</div>
-								}
-							</div>
-						)
-							: null
-					}
-					{
-						탭번호 == 2 ?
-							<div className="aniStart">
-								<h5>배송/반품/교환 안내</h5>
-								<table className="table table-bordered">
-									<tbody>
-										<tr>
-											<td scope="row" className="col-2 division">배송구분</td>
-											<td className="col">
-												mmm 배송
-												<ul style={{ paddingLeft: "0", marginBottom: "0" }}>
-													<li>·  <em>&nbsp;</em>배송비 : 무료배송</li>
-												</ul>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div> : null
+						// 함수는 실행을 해야하고, 컴포넌트로 쓰는 방법도 있고, JSX 를 반환하는 return 문 쓰기 
+						탭내용()
 					}
 
 				</div>
 			</>
 
 		)
+	}
+
+	function 탭내용(){
+		if(탭번호 == 0) {
+			return (
+				<div>
+					<h5>책소개</h5>
+					<p>{props.book[id].info}</p>
+				</div>
+			)
+		}
+		if(탭번호 == 1) {
+			return (
+				<div className={'aniStart ' + 애니메이션}>
+					{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
+						numId >= 0 && numId <= 3 ?
+							(
+								props.book[numId].review.map((a, i) => {
+									return <p>{a}</p>
+								})
+							)
+							: <div>리뷰1</div>
+					}
+				</div>
+			)
+		}
+		if(탭번호 == 2) {
+			return (
+				<div className={'aniStart ' + 애니메이션}>
+					<h5>배송/반품/교환 안내</h5>
+					<table className="table table-bordered">
+						<tbody>
+							<tr>
+								<td scope="row" className="col-2 division">배송구분</td>
+								<td className="col">
+									mmm 배송
+									<ul style={{ paddingLeft: "0", marginBottom: "0" }}>
+										<li>·  <em>&nbsp;</em>배송비 : 무료배송</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			)
+		}
+		return null
 	}
 
 	return (
