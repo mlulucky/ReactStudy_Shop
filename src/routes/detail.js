@@ -133,7 +133,8 @@ export default function Detail(props) {
 
 					{
 						// 함수는 실행을 해야하고, 컴포넌트로 쓰는 방법도 있고, JSX 를 반환하는 return 문 쓰기 
-						탭내용()
+						// 탭내용()
+						<탭내용 탭번호={탭번호} 애니메이션={애니메이션} numId={numId} id={id} props={props}/>
 					}
 
 				</div>
@@ -142,52 +143,7 @@ export default function Detail(props) {
 		)
 	}
 
-	function 탭내용(){
-		if(탭번호 == 0) {
-			return (
-				<div className={'aniStart ' + 애니메이션}>
-					<h5>책소개</h5>
-					<p>{props.book[id].info}</p>
-				</div>
-			)
-		}
-		if(탭번호 == 1) {
-			return (
-				<div className={'aniStart ' + 애니메이션}>
-					{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
-						numId >= 0 && numId <= 3 ?
-							(
-								props.book[numId].review.map((a, i) => {
-									return <p key={i}>{a}</p>
-								})
-							)
-							: <div>리뷰1</div>
-					}
-				</div>
-			)
-		}
-		if(탭번호 == 2) {
-			return (
-				<div className={'aniStart ' + 애니메이션}>
-					<h5>배송/반품/교환 안내</h5>
-					<table className="table table-bordered">
-						<tbody>
-							<tr>
-								<td scope="row" className="col-2 division">배송구분</td>
-								<td className="col">
-									mmm 배송
-									<ul style={{ paddingLeft: "0", marginBottom: "0" }}>
-										<li>·  <em>&nbsp;</em>배송비 : 무료배송</li>
-									</ul>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			)
-		}
-		return null
-	}
+
 
 	return (
 		<div className="container">
@@ -204,4 +160,51 @@ export default function Detail(props) {
 			<Outlet />
 		</div >
 	)
+}
+
+function 탭내용({탭번호, 애니메이션, numId, id, props}){
+	if(탭번호 == 0) {
+		return (
+			<div className={'aniStart ' + 애니메이션}>
+				<h5>책소개</h5>
+				<p>{props.book[id].info}</p>
+			</div>
+		)
+	}
+	if(탭번호 == 1) {
+		return (
+			<div className={'aniStart ' + 애니메이션}>
+				{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
+					numId >= 0 && numId <= 3 ?
+						(
+							props.book[numId].review.map((a, i) => {
+								return <p key={i}>{a}</p>
+							})
+						)
+						: <div>리뷰1</div>
+				}
+			</div>
+		)
+	}
+	if(탭번호 == 2) {
+		return (
+			<div className={'aniStart ' + 애니메이션}>
+				<h5>배송/반품/교환 안내</h5>
+				<table className="table table-bordered">
+					<tbody>
+						<tr>
+							<td scope="row" className="col-2 division">배송구분</td>
+							<td className="col">
+								mmm 배송
+								<ul style={{ paddingLeft: "0", marginBottom: "0" }}>
+									<li>·  <em>&nbsp;</em>배송비 : 무료배송</li>
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		)
+	}
+	return null
 }

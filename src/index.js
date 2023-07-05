@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App'; // 메인 App 컴포넌트
-import Detail from './routes/detail' // 상세 Detail 컴포넌트
+import Detail from './routes/Detail' // 상세 Detail 컴포넌트
 import Header from './components/Header'
-import Event from './routes/event'
+import Event from './routes/Event'
+import Cart from './routes/Cart'
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
@@ -15,6 +16,9 @@ import {
 import data from './data.js';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {Provider} from 'react-redux';
+import store from './store.js'
+
 
 function Root() {
   let [book, book변경] = useState(data);
@@ -82,6 +86,10 @@ function Root() {
 
     },
     {
+      path: "/cart",
+      element: <Cart />
+    },
+    {
       path: "*", // localhost:3000/dsfsfsdf 이상한 경로로 접속했을때 
       element: <h2>Oops! 없는 페이지 404 에러</h2>
     }
@@ -92,11 +100,14 @@ function Root() {
     // BrowserRouter 컴포넌트로 Header 컴포넌트 감싸주어 Router 컴포넌트 제공 
     // useNavigate를 사용가능 
     <React.StrictMode>
-      <BrowserRouter> {/* Router 컴포넌트로 감싸주기 */}
-        <Header />
-      { 로딩중 && <div>로딩중입니다.</div>}
-      </BrowserRouter>
-      <RouterProvider router={router} />
+      {/* Provider store 로 컴포넌트를 감싸면 하위 모든 자식컴포넌트들에서 store.js 에 있던 state 를 마음껏 꺼내 쓸수있다.  */}
+      <Provider store={store}>
+        <BrowserRouter> {/* Router 컴포넌트로 감싸주기 */}
+          <Header />
+        { 로딩중 && <div>로딩중입니다.</div>}
+        </BrowserRouter>
+        <RouterProvider router={router} />
+      </Provider>
     </React.StrictMode>
   )
 }
@@ -106,8 +117,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Root />
 );
 
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
