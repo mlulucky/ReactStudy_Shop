@@ -21,16 +21,28 @@ export default function Detail(props) {
 
 	let [탭번호, 탭번호변경] = useState(0);
 	let [애니메이션, 애니메이션변경] = useState('');
-
+	let [화면애니메이션, 화면애니메이션변경] = useState('');
+	
 	useEffect(()=>{
-		setTimeout(()=>{
+		// 가까이 있는 state 변경함수 애니메이션 변경의 경우 시간차를 두고 실행해야 상태변경시 재렌더링됨
+		let timer = setTimeout(()=>{
 			애니메이션변경('aniEnd');
 		},100);
 		return ()=>{
 			애니메이션변경('');
+			clearTimeout(timer);
 		}
-	},[탭번호]);
+	},[탭번호]); // 탭번호의 상태 변경시마다 실행
 
+	useEffect(()=>{ // Detail 컴포넌트 로드시, 애니메이션 적용
+		let timer = setTimeout(()=>{
+			화면애니메이션변경('aniEnd');
+		},100);
+		return ()=>{
+			화면애니메이션변경('');
+			clearTimeout(timer);
+		}
+	},[]); // 처음 컴포넌트 로드(마운트) 시 실행
 
 	useEffect(() => {
 		// 🍒html 이 모두 렌더링 된 이후에 실행
@@ -67,7 +79,7 @@ export default function Detail(props) {
 			return <h2 className="mt-5">없는 페이지입니다.</h2>
 		}
 		return (
-			<>
+			<div className={'row aniStart ' + 화면애니메이션}>
 				{
 					alertEvent == true ?
 						<div className="alert alert-warning mb-5">
@@ -125,7 +137,7 @@ export default function Detail(props) {
 					}
 
 				</div>
-			</>
+			</div>
 
 		)
 	}
@@ -133,7 +145,7 @@ export default function Detail(props) {
 	function 탭내용(){
 		if(탭번호 == 0) {
 			return (
-				<div>
+				<div className={'aniStart ' + 애니메이션}>
 					<h5>책소개</h5>
 					<p>{props.book[id].info}</p>
 				</div>
@@ -146,7 +158,7 @@ export default function Detail(props) {
 						numId >= 0 && numId <= 3 ?
 							(
 								props.book[numId].review.map((a, i) => {
-									return <p>{a}</p>
+									return <p key={i}>{a}</p>
 								})
 							)
 							: <div>리뷰1</div>
@@ -179,7 +191,8 @@ export default function Detail(props) {
 
 	return (
 		<div className="container">
-			<Outlet></Outlet>
+			{/* Outlet 은 index.js 에서 정의한 Detail 컴포넌트의 네스티트 라우터 /detail/id/member 경로 접속시 보여지는 컴포넌트 <div>react</div> 가 위치할 곳 */}
+			<Outlet></Outlet> 
 			{/* <button onClick={()=>{ setCount(count+1) }}>클릭</button> */}
 
 			<div className="row">
