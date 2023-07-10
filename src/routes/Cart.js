@@ -1,5 +1,6 @@
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeName, changeCount } from '../store'
 
 
 export default function Cart() {
@@ -8,8 +9,14 @@ export default function Cart() {
   console.log(commonState);
   console.log("작명2", commonState.작명2);
 
+  let dispatch = useDispatch();
+
   return (
-    <div className='cont'>
+    <div className='cont text-center'>
+      <div className='d-flex justify-content-between m-2'>
+        <h2>{commonState.작명}</h2>
+        <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
+      </div>
       <Table bordered>
         <thead>
           <tr>
@@ -35,12 +42,15 @@ export default function Cart() {
 }
 
 function Content({ 카트, 인덱스 }) {
+  let dispatch = useDispatch();
+
   return (
     <tr>
       <td>{카트.cart[인덱스].id}</td>
       <td>{카트.cart[인덱스].name}</td>
       <td>{카트.cart[인덱스].count}</td>
-      <td>@mdo</td>
+      <td><button onClick={()=>{ dispatch(changeCount(인덱스)) }}>버튼 +</button></td>
+      {/* <td><button onClick={()=>{ dispatch(changeCount()) }}>버튼 +</button></td> */}
     </tr>
   )
 }
