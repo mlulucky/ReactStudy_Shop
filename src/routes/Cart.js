@@ -14,7 +14,7 @@ export default function Cart() {
   return (
     <div className='cont text-center'>
       <div className='d-flex justify-content-between m-2'>
-        <h2>{commonState.작명}</h2>
+        <h2>{commonState.작명.name}{commonState.작명.age}</h2>
         <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
       </div>
       <Table bordered>
@@ -49,8 +49,7 @@ function Content({ 카트, 인덱스 }) {
       <td>{카트.cart[인덱스].id}</td>
       <td>{카트.cart[인덱스].name}</td>
       <td>{카트.cart[인덱스].count}</td>
-      <td><button onClick={()=>{ dispatch(changeCount(인덱스)) }}>버튼 +</button></td>
-      {/* <td><button onClick={()=>{ dispatch(changeCount()) }}>버튼 +</button></td> */}
+      <td><button onClick={()=>{ dispatch(changeCount()) }}>버튼 +</button></td>
     </tr>
   )
 }

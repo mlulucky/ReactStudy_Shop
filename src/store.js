@@ -5,13 +5,14 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 // state 를 만들어주는 함수
 let firstState = createSlice({ // useState 와 비슷한 기능
     name : "myName",
-    initialState : "moon",
+    initialState : {name : "moon", age : 20},
     reducers : {
         changeName(state) {
-            if(state.includes("eunjeong")) {
-                return "moon";
-            }
-            return "eunjeong " + state;
+            // if(state.includes("eunjeong")) {
+            //     return "moon";
+            // }
+            state.name = "lucky";
+            state.age++;
         }
     }
 })
