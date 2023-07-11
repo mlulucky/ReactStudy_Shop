@@ -5,8 +5,22 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 // state 를 만들어주는 함수
 let firstState = createSlice({ // useState 와 비슷한 기능
     name : "myName",
-    initialState : "moon"
+    initialState : "moon",
+    reducers : {
+        changeName(state) { // state : 기존 state(initialState)
+            if(state.includes("eunjeong")) {
+                return state = "moon"
+            }
+            return (
+                'eunjeong ' + state // state 변경
+            )
+        }
+    }
 })
+
+// slice이름.actions 
+export let { changeName } = firstState.actions; // 자료형을 변수로 빼는 문법 // state 변경함수를 변수에 저장하기
+
 
 let secondState = createSlice({
     name : "arr",
@@ -18,8 +32,21 @@ let cart = createSlice({
     initialState : [
         {id : 0, name : 'White and Black', count : 2},
         {id : 2, name : 'Grey Yordan', count : 1}
-    ]
+    ],
+    reducers : {
+        changeCount(state) {
+            // let newState = [...state]
+            let newState = state.map((a,i)=>{
+                state[i].count++;
+                // state[i].count = state[i].count + 1;
+
+            })
+            return newState;
+        }
+    }
 })
+
+export let {changeCount} = cart.actions;
 
 // state 를 등록하는 함수
 export default configureStore({
