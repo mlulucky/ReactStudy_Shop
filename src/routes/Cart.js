@@ -11,9 +11,12 @@ export default function Cart() {
   let dispatch = useDispatch(); // useDispatch() : 리덕스 store.js 로 요청을 보내주는 함수
 
   return (
-    <div className='cont'>
-      <h2>{commonState.작명}</h2>
-      <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
+
+    <div className='cont text-center'>
+      <div className='d-flex justify-content-between m-2'>
+        <h2>{commonState.작명.name}{commonState.작명.age}</h2>
+        <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
+      </div>
       <Table bordered>
         <thead>
           <tr>
@@ -41,6 +44,7 @@ export default function Cart() {
 
 function Content({ 카트, 인덱스}) {
   let dispatch = useDispatch(); // useDispatch() : 리덕스 store.js 로 요청을 보내주는 함수
+
   return (
     <tr>
       <td>{카트.cart[인덱스].id}</td>
