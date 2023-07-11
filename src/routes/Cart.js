@@ -1,7 +1,7 @@
 import { Table } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeName, changeCount } from '../store';
-
+import { changeName} from '../store';
+import { changeCount } from '../store/cartSlice';
 
 export default function Cart() {
   // Redux 에 있는 state 를 가져오는 함수
@@ -16,6 +16,7 @@ export default function Cart() {
       <div className='d-flex justify-content-between m-2'>
         <h2>{commonState.작명.name}{commonState.작명.age}</h2>
         <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
+        {/* <button onClick={()=>{ dispatch(changeName(100)) }}>이름변경</button> */}
       </div>
       <Table bordered>
         <thead>
@@ -29,7 +30,6 @@ export default function Cart() {
         <tbody>
           {
             commonState.cart.map((a, i) =>
-
               // { return   }  -> 중괄호 return 생략 가능
               <Content key={i} 카트={commonState} 인덱스={i}/>
 
@@ -50,7 +50,7 @@ function Content({ 카트, 인덱스}) {
       <td>{카트.cart[인덱스].id}</td>
       <td>{카트.cart[인덱스].name}</td>
       <td>{카트.cart[인덱스].count}</td>
-      <td><button onClick={()=>{ dispatch(changeCount()) }}>버튼 + </button></td> 
+      <td><button onClick={()=>{ dispatch(changeCount(카트.cart[인덱스].id)) }}>버튼 + </button></td> 
     </tr>
   )
   // dispatch(state변경함수()) 

@@ -3,9 +3,14 @@ import { Outlet, useParams } from "react-router-dom";
 // import styled from "styled-components"; // styled-component 컴포넌트를 만들 때 스타일을 미리 주입해서 만들 수 있다.
 import { useEffect, useState } from "react";
 import Nav from 'react-bootstrap/Nav';
+import { useSelector, useDispatch } from 'react-redux';
+import { orderProduct } from "../store/cartSlice";
 
 
 export default function Detail(props) {
+	let 리덕스State=useSelector((state)=>{return state});
+	let dispatch = useDispatch();
+
 	let { id } = useParams(); // 유저가 url 에 입력한 파라미터 값
 	const numId = parseInt(id);
 	console.log(id);
@@ -105,7 +110,7 @@ export default function Detail(props) {
 						<p>{props.book[id].content}</p>
 						<p>{props.book[id].price}원</p>
 					</div>
-					<button className="btn btn-outline-danger">주문하기</button>
+					<button className="btn btn-outline-danger" onClick={()=>{ dispatch(orderProduct(props.book[id]))}}>주문하기</button>
 				</div>
 				<div className="mb-5">
 					<Nav className="mt-5 mb-3 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
@@ -163,7 +168,7 @@ export default function Detail(props) {
 }
 
 function 탭내용({탭번호, 애니메이션, numId, id, props}){
-	if(탭번호 == 0) {
+	if(탭번호 === 0) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				<h5>책소개</h5>
@@ -171,7 +176,7 @@ function 탭내용({탭번호, 애니메이션, numId, id, props}){
 			</div>
 		)
 	}
-	if(탭번호 == 1) {
+	if(탭번호 === 1) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
@@ -186,7 +191,7 @@ function 탭내용({탭번호, 애니메이션, numId, id, props}){
 			</div>
 		)
 	}
-	if(탭번호 == 2) {
+	if(탭번호 === 2) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				<h5>배송/반품/교환 안내</h5>

@@ -1,4 +1,5 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import cart from './store/cartSlice'; // createSlice 파일로 분리해서 import 로 불러오기
 
 // Redux 란 ? state 들을 보관해놓는 통
 
@@ -6,8 +7,8 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 let firstState = createSlice({ // useState 와 비슷한 기능
     name: "myName",
 
-    initialState: "moon",
-    reducers: {
+    // initialState: "moon",
+    // reducers: {
         // changeName(state) { // state : 기존 state(initialState)
         //     if(state.includes("eunjeong")) {
         //         return state = "moon"
@@ -18,12 +19,13 @@ let firstState = createSlice({ // useState 와 비슷한 기능
 
         initialState: { name: "moon", age: 20 },
         reducers: {
-            changeName(state) {
+            changeName(state, actions) {
                 state.name = "lucky";
                 state.age++;
+                // state.age += actions.payload;
             }
         }
-    }
+    
 })
 
 // slice이름.actions 
@@ -35,22 +37,7 @@ let secondState = createSlice({
     initialState: [0, 1, 2]
 })
 
-let cart = createSlice({
-    name: "myFavorite",
-    initialState: [
-        { id: 0, name: 'White and Black', count: 2 },
-        { id: 2, name: 'Grey Yordan', count: 1 }
-    ],
-    reducers: {
-        changeCount(state) {
-            state.map((a, i)=>{
-                return state[i].count++;
-            })
-        }
-    }
-})
 
-export let { changeCount } = cart.actions;
 
 // state 를 등록하는 함수
 export default configureStore({
