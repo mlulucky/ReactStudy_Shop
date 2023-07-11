@@ -8,12 +8,11 @@ import { orderProduct } from "../store/cartSlice";
 
 
 export default function Detail(props) {
-	let 리덕스State=useSelector((state)=>{return state});
+	let 리덕스State = useSelector((state) => { return state });
 	let dispatch = useDispatch();
 
 	let { id } = useParams(); // 유저가 url 에 입력한 파라미터 값
 	const numId = parseInt(id);
-	console.log(id);
 	// id 는 0,1,2,3 인 경우에만 아닌 경우는 없는 ui 보여주기
 
 	let 찾은상품 = props.book.find(function (x) {
@@ -27,27 +26,27 @@ export default function Detail(props) {
 	let [탭번호, 탭번호변경] = useState(0);
 	let [애니메이션, 애니메이션변경] = useState('');
 	let [화면애니메이션, 화면애니메이션변경] = useState('');
-	
-	useEffect(()=>{
+
+	useEffect(() => {
 		// 가까이 있는 state 변경함수 애니메이션 변경의 경우 시간차를 두고 실행해야 상태변경시 재렌더링됨
-		let timer = setTimeout(()=>{
+		let timer = setTimeout(() => {
 			애니메이션변경('aniEnd');
-		},100);
-		return ()=>{
+		}, 100);
+		return () => {
 			애니메이션변경('');
 			clearTimeout(timer);
 		}
-	},[탭번호]); // 탭번호의 상태 변경시마다 실행
+	}, [탭번호]); // 탭번호의 상태 변경시마다 실행
 
-	useEffect(()=>{ // Detail 컴포넌트 로드시, 애니메이션 적용
-		let timer = setTimeout(()=>{
+	useEffect(() => { // Detail 컴포넌트 로드시, 애니메이션 적용
+		let timer = setTimeout(() => {
 			화면애니메이션변경('aniEnd');
-		},100);
-		return ()=>{
+		}, 100);
+		return () => {
 			화면애니메이션변경('');
 			clearTimeout(timer);
 		}
-	},[]); // 처음 컴포넌트 로드(마운트) 시 실행
+	}, []); // 처음 컴포넌트 로드(마운트) 시 실행
 
 	useEffect(() => {
 		// 🍒html 이 모두 렌더링 된 이후에 실행
@@ -110,7 +109,21 @@ export default function Detail(props) {
 						<p>{props.book[id].content}</p>
 						<p>{props.book[id].price}원</p>
 					</div>
-					<button className="btn btn-outline-danger" onClick={()=>{ dispatch(orderProduct(props.book[id]))}}>주문하기</button>
+					<div>
+						{
+							// 주문하기버튼 클릭시 리덕스 state 에 주문한 상품 객체 추가되는지 확인
+							리덕스State.cart.map((a, i) => {
+								return (
+									<div>
+										{a.name}
+										{a.id}
+										{a.count}
+									</div>
+								)
+							})
+						}
+					</div>
+					<button className="btn btn-outline-danger" onClick={() => { dispatch(orderProduct(props.book[id])) }}>주문하기</button>
 				</div>
 				<div className="mb-5">
 					<Nav className="mt-5 mb-3 nav-pills nav-justified" variant="tabs" defaultActiveKey="link-0">
@@ -139,7 +152,7 @@ export default function Detail(props) {
 					{
 						// 함수는 실행을 해야하고, 컴포넌트로 쓰는 방법도 있고, JSX 를 반환하는 return 문 쓰기 
 						// 탭내용()
-						<탭내용 탭번호={탭번호} 애니메이션={애니메이션} numId={numId} id={id} props={props}/>
+						<탭내용 탭번호={탭번호} 애니메이션={애니메이션} numId={numId} id={id} props={props} />
 					}
 
 				</div>
@@ -153,7 +166,7 @@ export default function Detail(props) {
 	return (
 		<div className="container">
 			{/* Outlet 은 index.js 에서 정의한 Detail 컴포넌트의 네스티트 라우터 /detail/id/member 경로 접속시 보여지는 컴포넌트 <div>react</div> 가 위치할 곳 */}
-			<Outlet></Outlet> 
+			<Outlet></Outlet>
 			{/* <button onClick={()=>{ setCount(count+1) }}>클릭</button> */}
 
 			<div className="row">
@@ -167,8 +180,8 @@ export default function Detail(props) {
 	)
 }
 
-function 탭내용({탭번호, 애니메이션, numId, id, props}){
-	if(탭번호 === 0) {
+function 탭내용({ 탭번호, 애니메이션, numId, id, props }) {
+	if (탭번호 === 0) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				<h5>책소개</h5>
@@ -176,7 +189,7 @@ function 탭내용({탭번호, 애니메이션, numId, id, props}){
 			</div>
 		)
 	}
-	if(탭번호 === 1) {
+	if (탭번호 === 1) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				{	// 🍒 url 파라미터의 값은 문자열이므로 parseInt 로 정수로 형변환 후에 비교값으로 연산
@@ -191,7 +204,7 @@ function 탭내용({탭번호, 애니메이션, numId, id, props}){
 			</div>
 		)
 	}
-	if(탭번호 === 2) {
+	if (탭번호 === 2) {
 		return (
 			<div className={'aniStart ' + 애니메이션}>
 				<h5>배송/반품/교환 안내</h5>
