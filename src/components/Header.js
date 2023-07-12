@@ -13,6 +13,7 @@ export default function Header(){
                     {/* <Nav.Link onClick={()=>{ navigate("/") }}>전체</Nav.Link> */}
                     <Nav.Link href="/detail">베스트</Nav.Link>
                     <Nav.Link href="/event">이벤트</Nav.Link>
+                    <Nav.Link href="/cart">장바구니</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

@@ -6,8 +6,8 @@ import { changeCount } from '../store/cartSlice';
 export default function Cart() {
   // Redux 에 있는 state 를 가져오는 함수
   let commonState = useSelector((state) => { return state });
-  console.log(commonState);
-  console.log("작명2", commonState.작명2);
+  // console.log(commonState);
+  // console.log("작명2", commonState.작명2);
   let dispatch = useDispatch(); // useDispatch() : 리덕스 store.js 로 요청을 보내주는 함수
 
   return (

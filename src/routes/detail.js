@@ -161,8 +161,6 @@ export default function Detail(props) {
 		)
 	}
 
-
-
 	return (
 		<div className="container">
 			{/* Outlet 은 index.js 에서 정의한 Detail 컴포넌트의 네스티트 라우터 /detail/id/member 경로 접속시 보여지는 컴포넌트 <div>react</div> 가 위치할 곳 */}
