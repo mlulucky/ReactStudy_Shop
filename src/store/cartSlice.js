@@ -9,7 +9,7 @@ let cart = createSlice({
     reducers: {
         // 화면에 출력된 카트 상품의 id 와 createSlice state 상품의 id 가 동일한 경우 버튼 클릭시 상품의 개수 1씩 증가
         // "버튼을 누르면 옆에 있는 상품id와 동일한 상품id 가진걸 state에서 찾은 다음에 그걸 +1" 
-        changeCount(state, actions) { // actions 파라미터
+        changeCount(state, actions) { // actions 파라미터 // actions.payload == 내가 선택한 상품 id
             // 방법1
             // state.map((a, i) => {
             //     if (actions.payload === state[i].id) // actions.payload : state변경함수의 파라미터를 불러온다. 
@@ -19,7 +19,7 @@ let cart = createSlice({
             // 방법2
             let index = state.findIndex(item => actions.payload === item.id);
             state[index].count++;
-            
+        
         },
         // 주문을 담는 함수 -> 배열에 push (id, name, count 를 불러오기)
         // 두번 클릭했을때는(객체가 있는 경우) count 만 1 증가하도록
@@ -34,6 +34,9 @@ let cart = createSlice({
             
             // state 배열에 추가된(마지막 인덱스) obj 의 카운트 개수 늘리기 // checkObj.count++;
             checkObj ? state[state.length-1].count++ : state.push(obj)
+
+            
+            // state.push(actions.payload);
         },
         // 주문을 삭제하는 함수 -> 
         deleteProduct(state, actions) { // array.splice(인덱스, 삭제개수, 추가할요소)
@@ -53,6 +56,8 @@ let cart = createSlice({
     }
 })
 
+// slice이름.actions 라고 적으면 state 변경함수가 전부 그 자리에 출력
+// 그걸 변수에 저장했다가 export 하라는 뜻
 export let { changeCount, orderProduct, deleteProduct } = cart.actions;
 
 export default cart;

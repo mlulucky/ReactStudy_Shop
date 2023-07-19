@@ -5,7 +5,7 @@ import { changeCount, deleteProduct } from '../store/cartSlice';
 
 export default function Cart() {
   // Redux 에 있는 state 를 가져오는 함수
-  let commonState = useSelector((state) => { return state });
+  let commonState = useSelector((state) => { return state }); // firstState, secondState, cart  등.. store Redux 파일안에있는 모든 state 를 불러온다
   let 카트 = useSelector((state) => { return state.cart });
   // console.log(commonState);
   // console.log("작명2", commonState.작명2);
