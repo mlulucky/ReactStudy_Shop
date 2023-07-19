@@ -29,26 +29,30 @@ let cart = createSlice({
             let obj = { id: actions.payload.id, name: actions.payload.title, count: 1 };
            
             // find 는 조건에 맞는 해당 요소를 새롭게 반환. 없으면 undefined 반환
-            // checkObj 는 state 배열에서 찾은 객체를 참조. obj 는 새로 생성한 객체를 참조
+            // checkObj 는 state 배열에서 찾은 객체를 반환. obj 는 새로 생성한 객체를 참조
             let checkObj = state.find(item => item.id === obj.id);
-            if(checkObj) {
-                // state 배열에 추가된(마지막 인덱스) obj 의 카운트 개수 늘리기
-                state[state.length-1].count++; // checkObj.count++;
-            } else {
-                state.push(obj);
-            }
-
             
-            // // ** obj 는 객체라서, 추가할때마다 서로 다른 obj 가된다.
-            // if (!state.includes(obj)) { // obj 를 포함하지 않으면
-            //     state.push(obj); // obj 를 추가
-            // } else {
-            //     obj.count += 1;
+            // state 배열에 추가된(마지막 인덱스) obj 의 카운트 개수 늘리기 // checkObj.count++;
+            checkObj ? state[state.length-1].count++ : state.push(obj)
+        },
+        // 주문을 삭제하는 함수 -> 
+        deleteProduct(state, actions) { // array.splice(인덱스, 삭제개수, 추가할요소)
+            let checkObj = state.find(item => item.id === actions.payload);
+            let index = state.findIndex(item => actions.payload === item.id);
+            // console.log("actions",actions); -> 확인해보니 actions.payload == 내가 선택한 상품의 id, 따라서 payload.id 할 필요가 없음
+            
+            // 동일한 방법 1
+            // if(checkObj) {
+            //     state.splice(index,1);
             // }
+            
+            // 동일한 방법 2 - checkObj 가 true 일때 state.splice(index,1) 실행
+            checkObj && state.splice(index,1);
         }
+
     }
 })
 
-export let { changeCount, orderProduct } = cart.actions;
+export let { changeCount, orderProduct, deleteProduct } = cart.actions;
 
 export default cart;
