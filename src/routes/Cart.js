@@ -1,11 +1,12 @@
 import { Table } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeName} from '../store';
-import { changeCount } from '../store/cartSlice';
+import { changeName } from '../store/store';
+import { changeCount, deleteProduct } from '../store/cartSlice';
 
 export default function Cart() {
   // Redux 에 있는 state 를 가져오는 함수
   let commonState = useSelector((state) => { return state });
+  let 카트 = useSelector((state) => { return state.cart });
   // console.log(commonState);
   // console.log("작명2", commonState.작명2);
   let dispatch = useDispatch(); // useDispatch() : 리덕스 store.js 로 요청을 보내주는 함수
@@ -15,8 +16,7 @@ export default function Cart() {
     <div className='cont text-center'>
       <div className='d-flex justify-content-between m-2'>
         <h2>{commonState.작명.name}{commonState.작명.age}</h2>
-        <button onClick={()=>{ dispatch(changeName()) }}>이름변경</button>
-        {/* <button onClick={()=>{ dispatch(changeName(100)) }}>이름변경</button> */}
+        <button onClick={() => { dispatch(changeName()) }}>이름변경</button>
       </div>
       <Table bordered>
         <thead>
@@ -29,9 +29,9 @@ export default function Cart() {
         </thead>
         <tbody>
           {
-            commonState.cart.map((a, i) =>
+            카트.map((a, i) =>
               // { return   }  -> 중괄호 return 생략 가능
-              <Content key={i} 카트={commonState} 인덱스={i}/>
+              <Content key={i} 카트={카트} 인덱스={i} />
 
             )
           }
@@ -42,15 +42,18 @@ export default function Cart() {
   )
 }
 
-function Content({ 카트, 인덱스}) {
+function Content({ 카트, 인덱스 }) {
   let dispatch = useDispatch(); // useDispatch() : 리덕스 store.js 로 요청을 보내주는 함수
 
   return (
     <tr>
-      <td>{카트.cart[인덱스].id}</td>
-      <td>{카트.cart[인덱스].name}</td>
-      <td>{카트.cart[인덱스].count}</td>
-      <td><button onClick={()=>{ dispatch(changeCount(카트.cart[인덱스].id)) }}>버튼 + </button></td> 
+      <td>{카트[인덱스].id}</td>
+      <td>{카트[인덱스].name}</td>
+      <td>{카트[인덱스].count}</td>
+      <td>
+        <button className="me-2 btn btn-outline-secondary" onClick={() => { dispatch(changeCount(카트[인덱스].id)) }}>버튼 + </button>
+        <button className="btn btn-outline-danger" onClick={() => { dispatch(deleteProduct(카트[인덱스].id)) }}>삭제</button>
+      </td>
     </tr>
   )
   // dispatch(state변경함수()) 
