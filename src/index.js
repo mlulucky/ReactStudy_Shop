@@ -17,7 +17,7 @@ import data from './data.js';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Provider} from 'react-redux';
-import store from './store.js'
+import store from './store/store.js'
 
 
 function Root() {
