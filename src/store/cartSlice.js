@@ -32,11 +32,16 @@ let cart = createSlice({
             // checkObj 는 state 배열에서 찾은 객체를 반환. obj 는 새로 생성한 객체를 참조
             let checkObj = state.find(item => item.id === obj.id);
             
-            // state 배열에 추가된(마지막 인덱스) obj 의 카운트 개수 늘리기 // checkObj.count++;
-            checkObj ? state[state.length-1].count++ : state.push(obj)
+            // state 배열에 추가된(마지막 인덱스) 상품 obj 의 카운트 개수 늘리기 // checkObj.count++;
+            // checkObj ? state[state.length-1].count++ : state.push(obj)
+            if(checkObj) {
+                state[state.length-1].count++;
+                alert("상품 추가주문이 완료되었습니다.");
+            } else {
+                state.push(obj);
+                alert("상품 주문이 완료되었습니다.")
+            }
 
-            
-            // state.push(actions.payload);
         },
         // 주문을 삭제하는 함수 -> 
         deleteProduct(state, actions) { // array.splice(인덱스, 삭제개수, 추가할요소)

@@ -1,6 +1,5 @@
 
 import { Outlet, useParams } from "react-router-dom";
-// import styled from "styled-components"; // styled-component 컴포넌트를 만들 때 스타일을 미리 주입해서 만들 수 있다.
 import { useEffect, useState } from "react";
 import Nav from 'react-bootstrap/Nav';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +10,7 @@ export default function Detail(props) {
 	let 리덕스State = useSelector((state) => { return state });
 	let dispatch = useDispatch();
 
+	// ✨url 파라미터 가져오는 방법
 	let { id } = useParams(); // 유저가 url 에 입력한 파라미터 값
 	const numId = parseInt(id);
 	// id 는 0,1,2,3 인 경우에만 아닌 경우는 없는 ui 보여주기
@@ -109,7 +109,7 @@ export default function Detail(props) {
 						<p>{props.book[id].content}</p>
 						<p>{props.book[id].price}원</p>
 					</div>
-					<div>
+					{/* <div>
 						{
 							// 주문하기버튼 클릭시 리덕스 state 에 주문한 상품 객체 추가되는지 확인
 							리덕스State.cart.map((a, i) => {
@@ -122,7 +122,7 @@ export default function Detail(props) {
 								)
 							})
 						}
-					</div>
+					</div> */}
 					<button className="btn btn-outline-danger" onClick={() => { dispatch(orderProduct(props.book[id])) }}>주문하기</button>
 				</div>
 				<div className="mb-5">
@@ -164,7 +164,7 @@ export default function Detail(props) {
 	return (
 		<div className="container">
 			{/* Outlet 은 index.js 에서 정의한 Detail 컴포넌트의 네스티트 라우터 /detail/id/member 경로 접속시 보여지는 컴포넌트 <div>react</div> 가 위치할 곳 */}
-			<Outlet></Outlet>
+			<Outlet />
 			{/* <button onClick={()=>{ setCount(count+1) }}>클릭</button> */}
 
 			<div className="row">
