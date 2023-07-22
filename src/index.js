@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App'; // 메인 App 컴포넌트
+import Main from './routes/Main'
 import Detail from './routes/Detail' // 상세 Detail 컴포넌트
-import Header from './components/Header'
 import Event from './routes/Event'
 import Cart from './routes/Cart'
 import reportWebVitals from './reportWebVitals';
@@ -18,7 +18,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Provider} from 'react-redux';
 import store from './store/store.js'
-
 
 function Root() {
   let [book, book변경] = useState(data);
@@ -59,35 +58,35 @@ function Root() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App ajax통신={ajax통신} newData={newData} book={book} book변경={book변경} 버튼누른횟수={버튼누른횟수} 버튼누른횟수변경={버튼누른횟수변경} />
-    },
-    {
-      path: "/detail/:id", // :id  URL파라미터 // /detail/아무거나
-      element: <Detail book={book} />,
-      children: [ // nested router // /detail/member로 접속시 <Detail> & <div>react</div> 을 보여줌
+      element: <App/>,
+      children: [
         {
-          path: "member", // 경로 "/detail/member" // 부모 경로인 "/detail"과 조합된 상대 경로로 변경 (잘못된예 "/member")
-          element: <div>react</div>
+          path: '', // ==  "/" 메인 인덱스 주소와 동일 // 첫 화면에서 Main 컴포넌트 보여주기
+          element: <section className='App'><Main ajax통신={ajax통신} newData={newData} book={book} book변경={book변경} 버튼누른횟수={버튼누른횟수} 버튼누른횟수변경={버튼누른횟수변경} /></section>
+
+        },
+        {
+          path: "detail/:id", // :id 는 url 파라미터문법
+          element: <Detail book={book}/>
+        },
+        {
+          path: "event",
+          element: <Event/>,
+          children: [{ // nested router => "react-router-dom" 의 Outlet 컴포넌트와 짝꿍
+            path: "one",
+            element: <h4>첫 주문시 양배추즙 서비스</h4>
+          },
+          {
+            path: "two",
+            element: <h4>생일기념 쿠폰받기</h4>
+          }
+          ]
+        },
+        {
+          path: "cart",
+          element: <Cart />
         }
       ]
-    },
-    {
-      path: "/event",
-      element: <Event />,
-      children: [{ // nested router => "react-router-dom" 의 Outlet 컴포넌트와 짝꿍
-        path: "one",
-        element: <h4>첫 주문시 양배추즙 서비스</h4>
-      },
-      {
-        path: "two",
-        element: <h4>생일기념 쿠폰받기</h4>
-      }
-      ]
-
-    },
-    {
-      path: "/cart",
-      element: <Cart />
     },
     {
       path: "*", // localhost:3000/dsfsfsdf 이상한 경로로 접속했을때 
@@ -102,11 +101,9 @@ function Root() {
     <React.StrictMode>
       {/* Provider store 로 컴포넌트를 감싸면 하위 모든 자식컴포넌트들에서 store.js 에 있던 state 를 마음껏 꺼내 쓸수있다.  */}
       <Provider store={store}>
-        <BrowserRouter> {/* Router 컴포넌트로 감싸주기 */}
-          <Header />
-        { 로딩중 && <div>로딩중입니다.</div>}
-        </BrowserRouter>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}>
+          { 로딩중 && <div>로딩중입니다.</div>}
+        </RouterProvider>
       </Provider>
     </React.StrictMode>
   )
